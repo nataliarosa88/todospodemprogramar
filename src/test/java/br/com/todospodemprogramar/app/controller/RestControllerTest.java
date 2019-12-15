@@ -6,7 +6,9 @@ import br.com.todospodemprogramar.app.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class RestControllerTest {
     @MockBean
     private UserService service;
 
+    private User user = new User();
+    private User returnedUser;
+
     public static final String USERNAME = "soandso";
     public static final String NAME = "so and so";
     public static final String HOBBY = "my hobbies";
@@ -40,11 +45,11 @@ public class RestControllerTest {
     public static final String CONTACT = "so";
     public static final String PASSWORD = "mysecret";
 
-    @Test
-    public void deveSalvarUsuario() throws Exception {
 
-        User user = new User();
-        user.setId(99999);
+
+    @Before
+    public void setup(){
+
         user.setName(NAME);
         user.setUsername(USERNAME);
         user.setPassword(PASSWORD);
@@ -52,7 +57,14 @@ public class RestControllerTest {
         user.setContact("so");
         user.setHobby(HOBBY);
 
-        User returnedUser = UserData.getUserMock(99999);
+        returnedUser = UserData.getUserMock(99999);
+
+    }
+
+    @Test
+    public void deveSalvarUsuario() throws Exception {
+
+        user.setId(99999);
 
         when(service.saveMyUser(eq(user))).thenReturn(returnedUser);
 
@@ -63,5 +75,30 @@ public class RestControllerTest {
                 .andReturn();
 
         assertThat(user.equals(returnedUser),is(true));
+    }
+
+    @Test
+    public void naoDeveSalvarUsuario() throws Exception {
+
+        user.setId(00000);
+
+        User returnedUser = UserData.getUserMock(99999);
+
+        when(service.saveMyUser(eq(user))).thenReturn(returnedUser);
+
+        mvc.perform(MockMvcRequestBuilders.post("/v2/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        assertThat(user.equals(returnedUser),is(false));
+    }
+
+    @After
+    public void tearDown(){
+
+        user = null;
+
     }
 }
