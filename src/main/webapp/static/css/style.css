@@ -1,0 +1,19 @@
+.invisible-at-first {
+	display: none;
+}
+a:hover {
+	text-decoration: none;
+}
+
+.panel {
+	transition: transform 0.7s;
+}
+
+.panel:hover {
+	transform: translateY(-0.5em);
+}
+
+.panelSize {
+	min-height: 10.5em;
+	min-width: 13em;
+}
