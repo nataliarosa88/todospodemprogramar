@@ -41,6 +41,10 @@ public class UserService {
 	public Optional<User> editUser(int id) {
 		return userRepository.findById(id);
 	}
+
+	public User updateUser(User user) {
+		return userRepository.save(user);
+	}
 	
 	public User findByUsernameAndPassword(String username, String password) {
 		return userRepository.findByUsernameAndPassword(username, password);
