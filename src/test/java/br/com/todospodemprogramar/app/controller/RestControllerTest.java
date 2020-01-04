@@ -21,9 +21,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(RestController.class)
@@ -72,6 +74,12 @@ public class RestControllerTest {
         .contentType(MediaType.APPLICATION_JSON)
         .content(new ObjectMapper().writeValueAsString(user)))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.experience", is(user.getExperience())))
+                .andExpect(jsonPath("$.contact", is(user.getContact())))
+                .andExpect(jsonPath("$.hobby", is(user.getHobby())))
                 .andReturn();
 
         assertThat(user.equals(returnedUser),is(true));
@@ -90,9 +98,36 @@ public class RestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(user)))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.experience", is(user.getExperience())))
+                .andExpect(jsonPath("$.contact", is(user.getContact())))
+                .andExpect(jsonPath("$.hobby", is(user.getHobby())))
                 .andReturn();
 
         assertThat(user.equals(returnedUser),is(false));
+    }
+
+    @Test
+    public void deveAlterarUsuario() throws Exception {
+        int userId = 99999;
+        User user = UserData.getUserMock(userId);
+        when(service.updateUser(eq(user))).thenReturn(returnedUser);
+
+        mvc.perform(MockMvcRequestBuilders.put("/v2/users/" + userId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(userId)))
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.username", is(user.getUsername())))
+                .andExpect(jsonPath("$.password", is(user.getPassword())))
+                .andExpect(jsonPath("$.experience", is(user.getExperience())))
+                .andExpect(jsonPath("$.contact", is(user.getContact())))
+                .andExpect(jsonPath("$.hobby", is(user.getHobby())))
+                .andReturn();
+
     }
 
     @After
