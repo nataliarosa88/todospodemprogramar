@@ -14,17 +14,23 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
+
+	//RestController - Begin
+	public User saveMyUser(User user ) {
+		return userRepository.save(user);
+	}
+
+	public User updateUser(User user) {
+		return userRepository.save(user);
+	}
+	//RestController - End
 	
 	private final UserRepository userRepository;
 	
 	public UserService(UserRepository userRepository) {
 		this.userRepository=userRepository;
 	}
-	
-	public User saveMyUser(User user ) {
-		return userRepository.save(user);
-	}
-	
+
 	public List<User> showAllUsers(){
 		List<User> users = new ArrayList<User>();
 		for(User user : userRepository.findAll()) {
@@ -42,10 +48,6 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
-	public User updateUser(User user) {
-		return userRepository.save(user);
-	}
-	
 	public User findByUsernameAndPassword(String username, String password) {
 		return userRepository.findByUsernameAndPassword(username, password);
 	}
@@ -59,8 +61,5 @@ public class UserService {
 		user = userRepository.findById(id);
 		return user;
 	}
-	
-	
-	}
 
-	
+}
