@@ -144,65 +144,9 @@
 			</div>
 		</c:when>
 
-		<c:when test="${mode=='MODE_REGISTER' }">
-			<div class="container text-center">
-				<h3>Programmers</h3>
-				<hr>
-					<c:if test="${not empty error }">
-						<div class="alert alert-danger">
-							<c:out value="${error }"></c:out>
-						</div>
-					</c:if>
-				<form class="form-horizontal" method="POST" action="users">
-					<input type="hidden" name="id" value="${user.id }" />
-					<div class="form-group">
-						<label class="control-label col-md-3">Username</label>
-						<div class="col-md-7">
-							<input type="text" required class="form-control" name="username"
-								value="${user.username }" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Name</label>
-						<div class="col-md-7">
-							<input type="text" required class="form-control" name="name"
-								value="${user.name }" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Experience</label>
-						<div class="col-md-7">
-							<input type="text" required class="form-control" name="experience"
-								value="${user.experience }" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Hobby </label>
-						<div class="col-md-3">
-							<input type="text" required class="form-control" name="hobby"
-								value="${user.hobby }" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Contact </label>
-						<div class="col-md-3">
-							<input type="text" required class="form-control" name="contact"
-								value="${user.contact }" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Password</label>
-						<div class="col-md-7">
-							<input type="password" class="form-control" name="password"
-								value="${user.password }" />
-						</div>
-					</div>
-					<div class="form-group ">
-						<input type="submit" class="btn btn-primary" value="Register" />
-					</div>
-				</form>
-			</div>
-		</c:when>
+
+
+
 		<c:when test="${mode=='ALL_USERS' }">
 
 			<div class=" col-md-8 col-md-offset-2">
@@ -231,61 +175,6 @@
 					</div>
 
 				</c:forEach>
-			</div>
-		</c:when>
-
-		<c:when test="${mode=='MODE_UPDATE' }">
-			<div class="container text-center">
-				<h3>Update User</h3>
-				<hr>
-				<form class="form-horizontal" method="POST" action="users">
-					<input type="hidden" name="id" value="${user.id }" />
-					<div class="form-group">
-						<label class="control-label col-md-3">Username</label>
-						<div class="col-md-7">
-							<input type="text" required class="form-control" name="username"
-								value="${user.username }" readonly="readonly" style="color: #787878;"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Name</label>
-						<div class="col-md-7">
-							<input type="text" required class="form-control" name="name"
-								value="${user.name }" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Experience</label>
-						<div class="col-md-7">
-							<input type="text" required class="form-control" name="experience"
-								value="${user.experience }" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Hobby </label>
-						<div class="col-md-3">
-							<input type="text" required class="form-control" name="hobby"
-								value="${user.hobby }" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Contact </label>
-						<div class="col-md-3">
-							<input type="text" required class="form-control" name="contact"
-								value="${user.contact }" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3">Password</label>
-						<div class="col-md-7">
-							<input type="password" class="form-control" name="password"
-								value="${user.password }" />
-						</div>
-					</div>
-					<div class="form-group ">
-						<input type="submit" class="btn btn-primary" value="Update" />
-					</div>
-				</form>
 			</div>
 		</c:when>
 
@@ -319,6 +208,70 @@
 				</form>
 			</div>
 		</c:when>
+
+				<c:when test="${(mode=='MODE_REGISTER') || (mode=='MODE_UPDATE') }">
+        			<div class="container text-center">
+        				<h3>Programmers</h3>
+        				<hr>
+        					<c:if test="${not empty error }">
+        						<div class="alert alert-danger">
+        							<c:out value="${error }"></c:out>
+        						</div>
+        					</c:if>
+        				<form class="form-horizontal" method="POST" action="users">
+        					<input type="hidden" name="id" value="${user.id }" />
+        					<div class="form-group">
+        						<label class="control-label col-md-3">Username</label>
+        						<div class="col-md-7">
+        						    <c:if test="${mode=='MODE_REGISTER'}">
+                                        <input required type="text" class="form-control" name="username" value="${user.username }" />
+        							</c:if>
+        							<c:if test="${mode=='MODE_UPDATE'}">
+                                        <input type="text" required class="form-control" name="username" value="${user.username }" readonly="readonly" style="color: #787878;"/>
+                                    </c:if>
+        						</div>
+        					</div>
+        					<div class="form-group">
+        						<label class="control-label col-md-3">Name</label>
+        						<div class="col-md-7">
+        							<input type="text" required class="form-control" name="name"
+        								value="${user.name }" />
+        						</div>
+        					</div>
+        					<div class="form-group">
+        						<label class="control-label col-md-3">Experience</label>
+        						<div class="col-md-7">
+        							<input type="text" required class="form-control" name="experience"
+        								value="${user.experience }" />
+        						</div>
+        					</div>
+        					<div class="form-group">
+        						<label class="control-label col-md-3">Hobby </label>
+        						<div class="col-md-3">
+        							<input type="text" required class="form-control" name="hobby"
+        								value="${user.hobby }" />
+        						</div>
+        					</div>
+        					<div class="form-group">
+        						<label class="control-label col-md-3">Contact </label>
+        						<div class="col-md-3">
+        							<input type="text" required class="form-control" name="contact"
+        								value="${user.contact }" />
+        						</div>
+        					</div>
+        					<div class="form-group">
+        						<label class="control-label col-md-3">Password</label>
+        						<div class="col-md-7">
+        							<input type="password" class="form-control" name="password"
+        								value="${user.password }" />
+        						</div>
+        					</div>
+        					<div class="form-group ">
+        						<input type="submit" class="btn btn-primary" value="Save" />
+        					</div>
+        				</form>
+        			</div>
+        		</c:when>
 	</c:choose>
 	<script src="static/js/jquery-1.11.1.min.js"></script>
 	<script src="static/js/bootstrap.min.js"></script>

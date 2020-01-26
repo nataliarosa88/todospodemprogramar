@@ -12,7 +12,7 @@ public class UserData {
     public static final String HOBBY = "my hobbies";
     public static final String EXPERIENCE = "so-and-so";
     public static final String CONTACT = "so";
-    public static final String PASSWORD = "mysecret";
+    public static final String PASSWORD = null;
 
 
     public static User getUserMock() {
@@ -22,7 +22,7 @@ public class UserData {
         user.setUsername(USERNAME);
         user.setPassword(PASSWORD);
         user.setExperience(EXPERIENCE);
-        user.setContact("so");
+        user.setContact(CONTACT);
         user.setHobby(HOBBY);
 
         return user;
@@ -36,7 +36,7 @@ public class UserData {
         user.setUsername(USERNAME);
         user.setPassword(PASSWORD);
         user.setExperience(EXPERIENCE);
-        user.setContact("so");
+        user.setContact(CONTACT);
         user.setHobby(HOBBY);
 
         return user;

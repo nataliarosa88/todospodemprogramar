@@ -11,14 +11,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Optional;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserServiceTest {
@@ -49,7 +45,7 @@ public class UserServiceTest {
         when(repository.save(eq(user))).thenReturn(user);
 
         // when
-        User savedUser = service.saveMyUser(user);
+        User savedUser = service.save(user);
 
         // then
         assertNotNull(savedUser);
